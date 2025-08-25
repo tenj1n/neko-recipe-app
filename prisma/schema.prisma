@@ -1,0 +1,64 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  male
+  female
+  unknown
+}
+
+enum FurType {
+  short
+  long
+  hairless
+}
+
+enum SizeClass {
+  small
+  medium
+  large
+}
+
+enum LifeStage {
+  kitten
+  adult
+  senior
+}
+
+model CatProfile {
+  id            Int        @id @default(autoincrement())
+  name          String
+  age           Int
+  weight        Float?
+  gender        Gender?
+  allergies     String?
+  activityLevel String?
+  furType       FurType?
+  size          SizeClass?
+  lifeStage     LifeStage?
+  neutered      Boolean?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  poopLogs PoopLog[]
+}
+
+model PoopLog {
+  id    Int      @id @default(autoincrement())
+  catId Int
+  date  DateTime @default(now())
+  score Int?
+  note  String?
+
+  cat CatProfile @relation(fields: [catId], references: [id], onDelete: Cascade)
+
+  @@index([catId, date])
+}

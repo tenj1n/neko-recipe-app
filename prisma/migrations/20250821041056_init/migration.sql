@@ -1,0 +1,8 @@
+-- CreateTable
+CREATE TABLE "CatProfile" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "weight" REAL NOT NULL,
+    "age" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
